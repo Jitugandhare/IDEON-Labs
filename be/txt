@@ -1,0 +1,19 @@
+calenderly
+user will login 
+he will open slots.
+open slots by particular user 6-7;
+
+user login as admin-
+
+as a user 6-7,8-9 which was open by admin.
+and user booked .
+admin can be multiple.
+
+
+implement backend using node,express,mongodb 
+
+1. admin will register as admin and then login.he will open slots of dates for 6-7,7-8.
+2. user will register as user and login then he will book slot.
+
+edge cases :
+if i book today's slot so the slots of before current slots should be disabled.
