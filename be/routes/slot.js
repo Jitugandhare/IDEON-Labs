@@ -1,7 +1,10 @@
 const express = require('express');
 const router = express.Router();
-const Booking = require("../model/slot.model.js");
+const Booking = require("../model/slot.js");
 const moment = require('moment');
+const dotenv = require('dotenv');
+
+dotenv.config();
 
 // Generate slots for a specific date (in 60-minute intervals)
 function generateSlots(date) {
