@@ -2,15 +2,12 @@ const express = require('express');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const Admin = require('../model/admin.js');
-const Slot = require('../model/admin.js');
-
+const Slot = require('../model/slot.js');
 const { protectAdmin } = require('../middleware/auth.js');
 
 const router = express.Router();
 const dotenv = require('dotenv');
 dotenv.config();
-
-
 
 // Admin Registration
 router.post('/register', async (req, res) => {
@@ -24,7 +21,7 @@ router.post('/register', async (req, res) => {
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
     res.status(201).json({ message: 'Admin registered successfully', token });
   } catch (error) {
-    res.status(500).json({ message: 'Error registering admin' });
+    res.status(500).json({ message: 'Error registering admin', error });
   }
 });
 
@@ -42,7 +39,7 @@ router.post('/login', async (req, res) => {
     const token = jwt.sign({ id: admin._id }, process.env.JWT_SECRET, { expiresIn: '30d' });
     res.json({ message: 'Admin logged in successfully', token });
   } catch (error) {
-    res.status(500).json({ message: 'Error logging in admin' });
+    res.status(500).json({ message: 'Error logging in admin', error });
   }
 });
 
@@ -51,7 +48,6 @@ router.post('/slots', protectAdmin, async (req, res) => {
   const { date, timeRange } = req.body;
 
   try {
-    // Check if the slot already exists
     const existingSlot = await Slot.findOne({ date, timeRange });
     if (existingSlot) {
       return res.status(400).json({ message: 'Slot already exists' });
@@ -61,7 +57,7 @@ router.post('/slots', protectAdmin, async (req, res) => {
     await slot.save();
     res.status(201).json({ message: 'Slot opened successfully', slot });
   } catch (error) {
-    res.status(500).json({ message: 'Error opening slot' });
+    res.status(500).json({ message: 'Error opening slot', error });
   }
 });
 

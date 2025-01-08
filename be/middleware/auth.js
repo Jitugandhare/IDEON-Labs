@@ -2,9 +2,10 @@ const jwt = require('jsonwebtoken');
 const Admin = require('../model/admin.js');
 const User = require('../model/user.js');
 
+// Protect Admin
 const protectAdmin = async (req, res, next) => {
   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
-  
+
   if (!token) {
     return res.status(401).json({ message: 'Not authorized, no token' });
   }
@@ -21,6 +22,7 @@ const protectAdmin = async (req, res, next) => {
   }
 };
 
+// Protect User
 const protectUser = async (req, res, next) => {
   const token = req.headers.authorization && req.headers.authorization.split(' ')[1];
 
